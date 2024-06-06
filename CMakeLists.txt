@@ -2,9 +2,10 @@ cmake_minimum_required(VERSION 3.29)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY out)
-set(CMAKE_BUILD_TYPE Release)
 
-if(${CMAKE_BUILD_TYPE} MATCHES Debug)
+if(NOT CMAKE_BUILD_TYPE)
+  SET(CMAKE_BUILD_TYPE Release)
+elseif(${CMAKE_BUILD_TYPE} MATCHES Debug)
 	set(CMAKE_CXX_FLAGS "-g")
 	message(STATUS "Debug mode enabled")
 endif()
@@ -19,3 +20,5 @@ add_executable(main
 	main.cpp)
 
 target_link_libraries(main PRIVATE glad glfw OpenGL::GL)
+
+unset(CMAKE_BUILD_TYPE CACHE)
